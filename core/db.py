@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 
 from . import pd_schemas, models
@@ -19,3 +19,7 @@ def write_long_url_to_db(income_url: pd_schemas.URL_IN_SCHEMA):
         session.commit()
         session.refresh(url)
     return url
+
+
+def get_urls_from_db():
+    return session.scalars(select(models.URL)).all()

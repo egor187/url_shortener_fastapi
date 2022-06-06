@@ -3,10 +3,7 @@ from typing import List
 from fastapi import FastAPI, HTTPException
 import validators
 
-from sqlalchemy import select
-
-from .db import session, write_long_url_to_db
-from . import models
+from .db import write_long_url_to_db, get_urls_from_db
 from . import pd_schemas
 
 app = FastAPI()
@@ -19,9 +16,7 @@ async def root():
 
 @app.get('/urls', response_model=List[pd_schemas.URL_INFO_SCHEMA])
 async def get_urls():
-    with session:
-        urls = session.execute(select(models.URL)).all()
-    return urls
+    return get_urls_from_db()
 
 
 @app.post('/short_code', response_model=pd_schemas.URL_INFO_SCHEMA)
