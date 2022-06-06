@@ -5,9 +5,10 @@ import validators
 
 from .db import write_long_url_to_db, get_urls_from_db
 from . import pd_schemas
+from .settings import get_settings
 
 app = FastAPI()
-
+settings = get_settings()
 
 @app.get('/')
 async def root():
