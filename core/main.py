@@ -1,9 +1,9 @@
 from typing import List
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, responses, Query
 import validators
 
-from .db import write_long_url_to_db, get_urls_from_db
+from .db import write_long_url_to_db, get_urls_from_db, get_long_url_from_db
 from . import pd_schemas
 from .settings import get_settings
 
@@ -28,4 +28,14 @@ async def short_code(income_url: pd_schemas.URL_IN_SCHEMA):
     return url
 
 
-
+@app.get('/forward/')
+async def forward(
+        short_code: str = Query(
+            min_length=settings.DEFAULT_SHORT_CODE_LENGTH,
+            max_length=settings.DEFAULT_SHORT_CODE_LENGTH
+        ),
+        redirect: bool = Query(default=False)):
+    long_url = get_long_url_from_db(short_code)
+    if redirect:
+        return responses.RedirectResponse(long_url)
+    return responses.JSONResponse(long_url)

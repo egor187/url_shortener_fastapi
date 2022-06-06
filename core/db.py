@@ -23,3 +23,11 @@ def write_long_url_to_db(income_url: pd_schemas.URL_IN_SCHEMA):
 
 def get_urls_from_db():
     return session.scalars(select(models.URL)).all()
+
+
+def get_long_url_from_db(short_code):
+    with session:
+        long_url = session.scalars(select(models.URL.long_url).filter_by(code=short_code)).first()
+        if not long_url:
+            return settings.DEFAULT_REDIRECT_URL
+        return long_url
