@@ -3,6 +3,7 @@ datadog==0.44.0
 ddtrace==1.1.4
 fastapi==0.78.0
 idna==3.3
+psycopg2==2.9.3
 pydantic==1.9.1
 sniffio==1.2.0
 starlette==0.19.1
