@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 
-from . import pd_schemas, models
-from .settings import get_settings
+from core import pd_schemas, models
+from core.settings import get_settings
 
 
 settings = get_settings()

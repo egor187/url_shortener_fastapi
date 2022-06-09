@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.orm import declarative_base
 
-from .helpers import get_short_code
+from core.helpers import get_short_code
 
 Base = declarative_base()
 

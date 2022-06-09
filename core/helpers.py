@@ -1,7 +1,7 @@
 import secrets
 import string
 
-from .settings import get_settings
+from core.settings import get_settings
 
 settings = get_settings()
 
