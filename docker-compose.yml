@@ -1,0 +1,37 @@
+version: "3.9"
+
+networks:
+  shared_net:
+    driver: bridge
+
+
+services:
+  db_service:
+    image: postgres:12.11
+    restart: on-failure
+    volumes:
+      - ../data/db:/var/lib/postgresql/data
+    ports:
+      - "0.0.0.0:5436:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: url_shortener_fastapi
+    networks:
+      - shared_net
+
+
+  url_shortener_fastapi:
+    build: .
+    env_file:
+      - .env_docker
+    volumes:
+      - .:/usr/scr/app
+    ports:
+      - "8000:8000"
+    restart: on-failure
+    container_name: url_shortener_fastapi
+    depends_on:
+      - db_service
+    networks:
+      - shared_net
